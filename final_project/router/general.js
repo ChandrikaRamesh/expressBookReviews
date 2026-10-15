@@ -20,7 +20,7 @@ async function getBooks() {
     }
 }
 
-getBooks();
+
 
 
 public_users.post("/register", (req,res) => {
@@ -52,16 +52,10 @@ public_users.post("/register", (req,res) => {
     });
 });
 
-// Get the book list available in the shop
-public_users.get('/',function (req, res) {
-  //Write your code here
-  return res.send(JSON.stringify(books,null,4));
-});
 
-// Get book details based on ISBN
-public_users.get('/isbn/:isbn',function (req, res) {
-  //Write your code here
-  const isbn = req.params.isbn;
+ // Get book details based on ISBN
+ public_users.get('/isbn/:isbn', function (req, res) {
+    const isbn = req.params.isbn;
 
     if (books[isbn]) {
         return res.status(200).json(books[isbn]);
@@ -70,7 +64,26 @@ public_users.get('/isbn/:isbn',function (req, res) {
     return res.status(404).json({
         message: "Book not found"
     });
- });
+});
+
+
+
+
+async function getBookByISBN(isbn) {
+    try {
+        const response = await axios.get(
+            `http://localhost:5000/isbn/${isbn}`
+        );
+
+        console.log("Book details:", response.data);
+        return response.data;
+    } catch (error) {
+        console.error(
+            "Error retrieving book details:",
+            error.response?.data || error.message
+        );
+    }
+}
   
 // Get book details based on author
 public_users.get('/author/:author',function (req, res) {
