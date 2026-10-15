@@ -7,7 +7,7 @@ const public_users = express.Router();
 // Get the book list available in the shop
 public_users.get('/', function (req, res) {
     return res.status(200).json(books);
-});
+})
 
 const axios = require('axios');
 
