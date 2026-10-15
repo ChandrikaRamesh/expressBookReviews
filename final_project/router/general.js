@@ -103,6 +103,24 @@ public_users.get('/author/:author',function (req, res) {
     });
 });
 
+
+async function getBooksByAuthor(author) {
+    try {
+        const response = await axios.get(
+            `http://localhost:5000/author/${encodeURIComponent(author)}`
+        );
+
+        console.log("Books by author:", response.data);
+        return response.data;
+    } catch (error) {
+        console.error(
+            "Error retrieving books by author:",
+            error.response?.data || error.message
+        );
+    }
+}
+
+
 // Get all books based on title
 public_users.get('/title/:title',function (req, res) {
   //Write your code here
