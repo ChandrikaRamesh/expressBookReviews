@@ -4,6 +4,24 @@ let isValid = require("./auth_users.js").isValid;
 let users = require("./auth_users.js").users;
 const public_users = express.Router();
 
+// Get the book list available in the shop
+public_users.get('/', function (req, res) {
+    return res.status(200).json(books);
+});
+
+const axios = require('axios');
+
+async function getBooks() {
+    try {
+        const response = await axios.get('http://localhost:5000/');
+        console.log(response.data);
+    } catch (error) {
+        console.error('Error retrieving books:', error.message);
+    }
+}
+
+getBooks();
+
 
 public_users.post("/register", (req,res) => {
   //Write your code here
