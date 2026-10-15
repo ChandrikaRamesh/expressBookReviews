@@ -139,6 +139,24 @@ public_users.get('/title/:title',function (req, res) {
     });
 });
 
+
+async function getBooksByTitle(title) {
+    try {
+        const response = await axios.get(
+            `http://localhost:5000/title/${encodeURIComponent(title)}`
+        );
+
+        console.log("Books with title:", response.data);
+        return response.data;
+    } catch (error) {
+        console.error(
+            "Error retrieving books by title:",
+            error.response?.data || error.message
+        );
+    }
+}
+
+
 //  Get book review
 public_users.get('/review/:isbn',function (req, res) {
   //Write your code here
